@@ -9,23 +9,30 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 public class SemisterViewModel extends AndroidViewModel {
-         public  Repository myrepository;
-         LiveData<List<Semister>>allSemister;
-
+    public Repository myrepository;
+    LiveData<List<Semister>> allSemister;
 
 
     public SemisterViewModel(@NonNull Application application) {
         super(application);
-        myrepository=new Repository(application);
-        this.allSemister=myrepository.getAllSemister();
+        myrepository = new Repository(application);
+        this.allSemister = myrepository.getAllSemister();
     }
 
-    public  LiveData<List<Semister>>GetALlSemister(){
+    public LiveData<List<Semister>> GetALlSemister() {
         return allSemister;
     }
 
-    public  void InsertSemister(Semister semister){
+    public void InsertSemister(Semister semister) {
         myrepository.InsertSemister(semister);
+    }
+
+    public void DeleteSemister(Semister semister) {
+        myrepository.DeleteSemister(semister);
+    }
+
+    public void UpdateSemister(Semister semister) {
+        myrepository.UpdateSemister(semister);
     }
 
 }

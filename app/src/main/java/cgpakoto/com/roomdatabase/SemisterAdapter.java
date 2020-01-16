@@ -12,8 +12,11 @@ import java.util.List;
 
 public class SemisterAdapter extends RecyclerView.Adapter<SemisterAdapter.viewHolder> {
  List<Semister> mylist;
+ OnRecyclerItemClickInterface itemClickInterface;
 
-    public SemisterAdapter(List<Semister> mylist) {
+
+    public SemisterAdapter(List<Semister> mylist,OnRecyclerItemClickInterface intface) {
+        this.itemClickInterface=intface;
         this.mylist = mylist;
     }
 
@@ -22,7 +25,7 @@ public class SemisterAdapter extends RecyclerView.Adapter<SemisterAdapter.viewHo
     public viewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.semisteritemview,viewGroup,false);
 
-       return  new viewHolder(view);
+       return  new viewHolder(view,itemClickInterface);
     }
 
     @Override
@@ -44,15 +47,28 @@ public class SemisterAdapter extends RecyclerView.Adapter<SemisterAdapter.viewHo
 
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder{
+    public class viewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView semistername,semistergpa,semistercredit;
+        OnRecyclerItemClickInterface onRecyclerItemClickInterface;
 
 
-        public viewHolder(@NonNull View itemView) {
+        public viewHolder(@NonNull View itemView,OnRecyclerItemClickInterface interFace) {
             super(itemView);
             semistercredit=itemView.findViewById(R.id.semistercredittv);
             semistergpa=itemView.findViewById(R.id.semistergpatv);
             semistername=itemView.findViewById(R.id.semisterNametv);
+            itemView.setOnClickListener(this);
+            this.onRecyclerItemClickInterface=interFace;
+
         }
+
+        @Override
+        public void onClick(View view) {
+            onRecyclerItemClickInterface.OnItemClick(getAdapterPosition());
+        }
+    }
+
+    public interface  OnRecyclerItemClickInterface{
+        void OnItemClick(int position);
     }
 }
